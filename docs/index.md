@@ -6,7 +6,14 @@ herokulink: https://herokucontainer
 
 The **RCF Shop API**  can be used to query items from a warehouse based on name and availablility. The *film* query is an addition built early in the project.
 
-### Query
+Currently, all urlencoded parameters must be lowercase.
+
+The API can be used in two modes:
+
+1. Classic [REST queries](#rest-query-operations) can be made.
+1. New [GraphQL queries](#alternative-queryql-operations) can also be used.
+
+### REST Query Operations
 `{{ page.herokulink }}/query` can be used to find single films.
 
 Parameter **name** can be filled with a partial film name. For instance, `name=Casa`, supplied as `{{ page.herokulink }}/query?name=Casa` will return `{"title":"Casanova","price":63,"inventory_count":"0"}`. Queries made without the `all` flag will return the first similar result.
@@ -44,6 +51,6 @@ The result will appear something like:
 ]
 ```
 
-### Film
+### Alternative QueryQL Operations
 
-`{{ page.herokulink }}/film/film name`
+`{{ page.herokulink }}/queryql` uses the **GraphQL** system.

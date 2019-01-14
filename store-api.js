@@ -65,12 +65,16 @@ app.get('/', (req, res) => {
 });
 
 app.get('/query', (req, res) => {
+    console.log(req.query);
     if (req.query.name) {
         queryFilmByName(res, req.query.name, req.query.instock, req.query.all);
     } else {
         res.json({ error: 'No parameters provided.', message: 'Please read the docs at https://ryanfleck.github.io/Shopify-Challenge-S19/' });
     }
 });
+
+/*
+ * Could be easily extended for use as a specialty store:
 
 app.get('/[film|films]/:name', (req, res) => {
     queryFilmByName(res, req.params.name, req.query.instock, req.query.all);
@@ -79,6 +83,7 @@ app.get('/[film|films]/:name', (req, res) => {
 app.get('/[film|films]', (req, res) => {
     queryFilmByName(res, null, req.query.instock, req.query.all);
 });
+*/
 
 function queryFilmByName(res, name, instock, all) {
     let queryFlags = '';
