@@ -50,4 +50,4 @@ async function pgQuery(query, args, rfunc) {
     }
 }
 
-pgQuery('select * from products', [], console.log);
+module.exports = { pgQuery };
