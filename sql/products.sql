@@ -1,6 +1,6 @@
 CREATE TABLE products (
 	title VARCHAR(50) NOT NULL,
-	price DECIMAL(4,2) NOT NULL,
+	price DECIMAL(5,2) NOT NULL,
 	inventory_count INT NOT NULL
 );
 

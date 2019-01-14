@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
-    ssl: false
+    ssl: false,
 });
 
 pool.on('error', (err) => {
@@ -15,11 +15,11 @@ pool.on('error', (err) => {
  *  pgQuery
  *     sends a query to the database configured in the .env
  *     pgQuery wraps an asynchronous function to send the query.
- * 
+ *
  *  query - PSQL formatted query string with '$1, $2, $3' for arg insertions.
  *  args - array of arguments.
  *  rfunc - return function.
- * 
+ *
  *  example: list all items in a table:
  *     pgQuery('select * from products', [], console.log);
  */
@@ -32,19 +32,19 @@ async function pgQuery(query, args, rfunc) {
     // Connect to POOL.
     try {
         client = await pool.connect();
-    } catch(e) { 
+    } catch (e) {
         console.error(`<> pgQuery().async: POOL connection error:\n\n ${e}\n\nUnrecoverable error.`);
         process.exit(1);
     }
-    
+
     // Run the Query.
     try {
         const res = await client.query(query, args);
         if (rfunc) { rfunc(res.rows); }
-    } catch(e){ 
+    } catch (e) {
         console.error(`<> pgQuery().async: Query error:\n\n ${e}\n\nUnrecoverable error.`);
         process.exit(1);
-    }finally {
+    } finally {
         client.release();
         console.log(`<> pgquery().async completed for query '${querySnippet}...'`);
     }
