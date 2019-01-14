@@ -11,7 +11,6 @@ Currently, all urlencoded parameters must be lowercase.
 The API can be used in two modes:
 
 1. Classic [REST queries](#rest-query-operations) can be made.
-1. New [GraphQL queries](#alternative-queryql-operations) can also be used.
 
 ### REST Query Operations
 `{{ page.herokulink }}/query` can be used to find single films.
@@ -51,6 +50,3 @@ The result will appear something like:
 ]
 ```
 
-### Alternative QueryQL Operations
-
-`{{ page.herokulink }}/queryql` uses the **GraphQL** system.
