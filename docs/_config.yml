@@ -1,12 +1,12 @@
 theme: jekyll-theme-cayman
 
-name: MovieStore API
-title: MovieStore API
+name: RCF Shop API
+title: RCF Shop API
 descripton: F
 show_downloads: true
 
 # Setup
-title:        MovieStore API
+title:        RCF Shop API
 tagline:      Created for the Shopify Summer 2019 Developer Intern Challenge.
 locale:       "en"
 

@@ -55,37 +55,60 @@ app.use('/graphql', graphqlHTTP({
     graphiql: true,
 }));
 
-app.get('/query', (req, res) => {
-    const instock = req.query.instock;
-    if (instock != null) {
-        console.log('Instock flag.');
-    }
+/*
+ *  ExpressJS responses.
+ */
 
-    const name = req.query.name;
-    const price = req.query.price;
-
-    res.send({ instock, name, price });
+// Send error with link to instructions if no input provided.
+app.get('/', (req, res) => {
+    res.json({ error: 'No API input provided.', message: 'Please read the docs at https://ryanfleck.github.io/Shopify-Challenge-S19/' });
 });
 
-app.get('/film/:name', (req, res) => {
-    const instock = req.query.instock;
+app.get('/query', (req, res) => {
+    if (req.query.name) {
+        queryFilmByName(res, req.query.name, req.query.instock);
+    } else {
+        res.json({});
+    }
+});
+
+app.get('/[film|films]/:name', (req, res) => {
+    queryFilmByName(res, req.params.name, req.query.instock);
+});
+
+app.get('/[film|films]', (req, res) => {
+    queryFilmByName(res, null, req.query.instock);
+});
+
+function queryFilmByName(res, name, instock) {
+    let queryFlags = '';
 
     if (instock != null) {
         console.log('Instock flag.');
+        if (instock.toLowerCase() !== 'false') {
+            queryFlags = 'and inventory_count > 0';
+        } else {
+            queryFlags = 'and inventory_count = 0';
+        }
     }
-    const name = req.params.name;
 
-    console.log(req.params);
     if (name) {
-        pgQuery('select * from products where (LOWER(title)=$1)', [name.toLowerCase()], (rows) => {
-            res.send(rows);
+        const queryname = name.trim().toLowerCase();
+        console.log(`-- Querying ${queryname}`);
+        pgQuery(`select * from products where (LOWER(title) ~ $1) ${queryFlags};`, [queryname], (rows) => {
+            const firstResult = rows[0];
+            res.json(firstResult || {});
         });
     } else {
-        res.send({ error: 'Name is required.' });
+        pgQuery('select * from products;', [], (rows) => {
+            res.json(rows);
+        });
     }
+}
 
-
-    // res.send({ 'instock': instock, 'name': name });
+// Handle all other requests with an error.
+app.get('*', (req, res) => {
+    res.json({ error: 'Malformed input.', message: 'Please read the docs at https://ryanfleck.github.io/Shopify-Challenge-S19/' });
 });
 
 app.use(helmet());
