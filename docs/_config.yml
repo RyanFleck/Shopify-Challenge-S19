@@ -1,1 +1,15 @@
 theme: jekyll-theme-cayman
+
+title: MovieStore API
+descripton: F
+show_downloads: true
+
+# Setup
+title:        MovieStore API
+tagline:      Created for the Shopify Summer 2019 Developer Intern Challenge.
+locale:       "en"
+
+# About/contact
+author:
+  name:       Ryan Fleck
+  url:        http://ryanfleck.github.io
