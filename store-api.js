@@ -66,22 +66,23 @@ app.get('/', (req, res) => {
 
 app.get('/query', (req, res) => {
     if (req.query.name) {
-        queryFilmByName(res, req.query.name, req.query.instock);
+        queryFilmByName(res, req.query.name, req.query.instock, req.query.all);
     } else {
-        res.json({});
+        res.json({ error: 'No parameters provided.', message: 'Please read the docs at https://ryanfleck.github.io/Shopify-Challenge-S19/' });
     }
 });
 
 app.get('/[film|films]/:name', (req, res) => {
-    queryFilmByName(res, req.params.name, req.query.instock);
+    queryFilmByName(res, req.params.name, req.query.instock, req.query.all);
 });
 
 app.get('/[film|films]', (req, res) => {
-    queryFilmByName(res, null, req.query.instock);
+    queryFilmByName(res, null, req.query.instock, req.query.all);
 });
 
-function queryFilmByName(res, name, instock) {
+function queryFilmByName(res, name, instock, all) {
     let queryFlags = '';
+    console.log(`Querying film ${name} ${instock}`);
 
     if (instock != null) {
         console.log('Instock flag.');
@@ -96,8 +97,12 @@ function queryFilmByName(res, name, instock) {
         const queryname = name.trim().toLowerCase();
         console.log(`-- Querying ${queryname}`);
         pgQuery(`select * from products where (LOWER(title) ~ $1) ${queryFlags};`, [queryname], (rows) => {
-            const firstResult = rows[0];
-            res.json(firstResult || {});
+            if (all === null) {
+                const firstResult = rows[0];
+                res.json(firstResult || {});
+            } else {
+                res.json(rows);
+            }
         });
     } else {
         pgQuery('select * from products;', [], (rows) => {
