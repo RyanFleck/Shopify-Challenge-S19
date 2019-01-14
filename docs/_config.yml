@@ -1,5 +1,6 @@
 theme: jekyll-theme-cayman
 
+name: MovieStore API
 title: MovieStore API
 descripton: F
 show_downloads: true

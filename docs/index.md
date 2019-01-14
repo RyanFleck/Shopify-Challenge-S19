@@ -3,4 +3,4 @@ layout: default
 title: {{ site.name }}
 ---
 
-Documentation.
+Documentation for the API will appear here.

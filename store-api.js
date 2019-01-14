@@ -14,7 +14,6 @@ const app = express();
 /* Remove after learning about GraphQL */
 const graphqlHTTP = require('express-graphql');
 
-
 const schema = buildSchema(`
   type Query {
     title: String

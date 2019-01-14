@@ -11,43 +11,43 @@ pool.on('error', (err) => {
     process.exit(-1);
 });
 
-(async () => {
-    const client = await pool.connect();
-    try {
-        await client.query(fs.readFileSync('./sql/init-db.sql').toString());
-    } catch (err) {
-        console.error(err);
-    } finally {
-        client.release();
-        console.log(`-- Tables instantiated.`);
-    }
-})().catch(e => console.error(e.stack));
-
 /*
  *  pgQuery
  *     sends a query to the database configured in the .env
+ *     pgQuery wraps an asynchronous function to send the query.
  * 
  *  query - PSQL formatted query string with '$1, $2, $3' for arg insertions.
  *  args - array of arguments.
  *  rfunc - return function.
+ * 
+ *  example: list all items in a table:
+ *     pgQuery('select * from products', [], console.log);
  */
 
-async function pgQuery (query, args, rfunc) {
-
-    if (!query) {
-        console.error('-- pgquery() ERROR: No query provided.');
-        return;
-    }
-
+async function pgQuery(query, args, rfunc) {
     const querySnippet = query.slice(0, 20);
-
     console.log(`>< pgquery().async requested for query '${querySnippet}...'`);
-    const client = await pool.connect();
+    let client;
+
+    // Connect to POOL.
+    try {
+        client = await pool.connect();
+    } catch(e) { 
+        console.error(`<> pgQuery().async: POOL connection error:\n\n ${e}\n\nUnrecoverable error.`);
+        process.exit(1);
+    }
+    
+    // Run the Query.
     try {
         const res = await client.query(query, args);
         if (rfunc) { rfunc(res.rows); }
-    } finally {
+    } catch(e){ 
+        console.error(`<> pgQuery().async: Query error:\n\n ${e}\n\nUnrecoverable error.`);
+        process.exit(1);
+    }finally {
         client.release();
+        console.log(`<> pgquery().async completed for query '${querySnippet}...'`);
     }
-    console.log(`<> pgquery().async completed for query '${querySnippet}...'`);
 }
+
+pgQuery('select * from products', [], console.log);
