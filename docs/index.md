@@ -1,10 +1,12 @@
 ---
 layout: default
 title: Home
-herokulink: https://herokucontainer
+herokulink: https://rcf-shopify-s19.herokuapp.com
 ---
 
-The **RCF Shop API**  can be used to query items from a warehouse based on name and availablility.
+The **RCF Shop API**  can be used to query items from a warehouse based on name and availablility. 
+
+The API is currently live at [rcf-shopify-s19.herokuapp.com](https://rcf-shopify-s19.herokuapp.com/)
 
 ### REST Query Operations
 `{{ page.herokulink }}/query` can be used to find single films.

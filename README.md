@@ -5,7 +5,7 @@ Personal *Shopify Summer 2019 Developer Intern Challenge* solution.
 A RESTful NodeJS + PostgreSQL API. Attempting to go start to finish in a single evening, 5PM - 10PM.
 
 **Documentation:** <https://ryanfleck.github.io/Shopify-Challenge-S19/>
-**Heroku Container:** *Not deployed.*
+**Heroku Container:** <https://rcf-shopify-s19.herokuapp.com>
 
 **Technology Used:**
 - NodeJS <https://nodejs.org/en/>
@@ -22,6 +22,8 @@ A RESTful NodeJS + PostgreSQL API. Attempting to go start to finish in a single 
 Nice, db is full of sample data from <https://mockaroo.com/>:
 
 ![Sample Data](docs/assets/PSQL_Init.PNG)
+
+Fantastic - Heroku logs can be streamed ` heroku logs -a rcf-shopify-s19 --tail`
 
 ## Resources
 
