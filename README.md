@@ -31,4 +31,4 @@ Nice, db is full of sample data from <https://mockaroo.com/>:
 ## Time Tracking
 
 1. **2018-01-13** - 3h - Decided to apply to Shopify and start the challenge.
-1. **2018-01-14** - 2h - Last day to work before deadline!
+1. **2018-01-14** - 3h - Last day to work before deadline! Removed GraphQL bits. Deployed to Heroku. No unit testing yet.

@@ -4,13 +4,7 @@ title: Home
 herokulink: https://herokucontainer
 ---
 
-The **RCF Shop API**  can be used to query items from a warehouse based on name and availablility. The *film* query is an addition built early in the project.
-
-Currently, all urlencoded parameters must be lowercase.
-
-The API can be used in two modes:
-
-1. Classic [REST queries](#rest-query-operations) can be made.
+The **RCF Shop API**  can be used to query items from a warehouse based on name and availablility.
 
 ### REST Query Operations
 `{{ page.herokulink }}/query` can be used to find single films.
@@ -50,3 +44,16 @@ The result will appear something like:
 ]
 ```
 
+### Purchase
+
+If a film is out of stock, the user will be presented with this message:
+
+`{{ page.herokulink }}/purchase?name=Ghost%20in%20the%20Machine`
+
+```json
+{
+    "error":"Out of stock.",
+    "message":"The film Ghost in the Machine (a.k.a. Deadly Terror) 
+        is out of stock! Please check back soon."
+}
+```
