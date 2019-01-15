@@ -5,6 +5,7 @@ Personal *Shopify Summer 2019 Developer Intern Challenge* solution.
 A RESTful NodeJS + PostgreSQL API. Attempting to go start to finish in a single evening, 5PM - 10PM.
 
 **Documentation:** <https://ryanfleck.github.io/Shopify-Challenge-S19/>
+
 **Heroku Container:** <https://rcf-shopify-s19.herokuapp.com>
 
 **Technology Used:**

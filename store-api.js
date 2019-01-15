@@ -16,7 +16,6 @@ app.get('/', (req, res) => {
 
 // Query a single film, or all matching titles.
 app.get('/query', (req, res) => {
-    console.log(req.query);
     if (req.query.name) {
         queryProductByName(res, req.query.name, req.query.instock, req.query.all);
     } else {
@@ -27,7 +26,7 @@ app.get('/query', (req, res) => {
 function queryProductByName(res, name, instock, all) {
     const queryFlags = processInStockFlag(instock, 'and');
     const queryname = name.trim().toLowerCase();
-    pgQuery(`select * from products where (LOWER(title) ~ $1) ${queryFlags};`, [queryname], (rows) => {
+    pgQuery(`select * from products where (LOWER(title) ~ $1) ${queryFlags} ORDER BY title;`, [queryname], (rows) => {
         if (typeof all !== 'string') {
             const firstResult = rows[0];
             res.json(firstResult || {});
@@ -39,9 +38,8 @@ function queryProductByName(res, name, instock, all) {
 
 // Get all films in inventory.
 app.get('/all', (req, res) => {
-    console.log(req.query);
     const queryFlags = processInStockFlag(req.query.instock, 'where');
-    pgQuery(`select * from products ${queryFlags};`, [], (rows) => {
+    pgQuery(`select * from products ${queryFlags} ORDER BY title;`, [], (rows) => {
         res.json(rows);
     });
 });
@@ -58,12 +56,11 @@ function processInStockFlag(instock, prefix) {
 }
 
 // 'Purchase' a single film. ?process=true flag required to decrement.
-app.get('/purchase', (req, res) => {
-    console.log(req.query);
+app.post('/purchase', (req, res) => {
     const purchaseIfInStock = processPurchaseFlag(req.query.process);
     if (req.query.name) {
         const queryname = req.query.name.trim().toLowerCase();
-        pgQuery('select * from products where (LOWER(title) = $1);', [queryname], (rows) => {
+        pgQuery('select * from products where (LOWER(title) = $1) ORDER BY title;', [queryname], (rows) => {
             if (!rows[0]) {
                 res.json({ error: 'No such product.', message: 'Ensure the name is typed correctly to purchase.' });
                 return;
@@ -101,7 +98,6 @@ function processPurchaseFlag(purchase) {
     }
     return false;
 }
-
 
 // Handle all other requests with an error.
 app.get('*', (req, res) => {
