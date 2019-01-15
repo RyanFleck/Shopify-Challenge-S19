@@ -18,7 +18,7 @@ The API is currently live at [rcf-shopify-s19.herokuapp.com](https://rcf-shopify
 
 `{{ page.herokulink }}/all` will return the entire inventory.
 
-#### Query
+#### Using the **Query** Path
 
 Parameter **name** can be filled with a partial item name. For instance, `name=Casa`, supplied as `{{ page.herokulink }}/query?name=Casa` will return `{"title":"Casanova","price":63,"inventory_count":"0"}`. Queries made without the `all` flag will return the first similar result.
 
@@ -55,13 +55,13 @@ The result will appear something like:
 ]
 ```
 
-#### All
+#### Using the **All** Path
 
 `{{ page.herokulink }}/all` can be used with `&instock` or `&instock=false` to return all of the inventory results that are in the system, available, or out of stock.
 
 ### Purchases
 
-To purchase a product, first query an item, then POST use the full name as the name parameter to `/purchase`.
+To purchase a product, first query an item, then **POST** use the full name as the name parameter to `/purchase`.
 
 First, find an item using `query` or `all`.
 
@@ -115,3 +115,5 @@ Querying *Alien Abduction* shows that the `inventory_count` has been reduced by 
     "inventory_count": "469"
 }
 ```
+
+*Postman* is recommended for POSTing to the API.
