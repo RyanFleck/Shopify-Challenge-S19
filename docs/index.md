@@ -49,9 +49,19 @@ The result will appear something like:
 
 ### Purchase
 
-To purchase a product, first query an item, then use the full name as the name parameter in a `purchase` query:
+To purchase a product, first query an item, then POST use the full name as the name parameter to `/purchase`.
 
-`https://rcf-shopify-s19.herokuapp.com/query?name=Wings`
+First, find an item using `query` or `all`.
+
+Ex. `{{ page.herokulink }}/query?name=alie`
+
+```json
+{
+    "title": "Alien Abduction",
+    "price": 37,
+    "inventory_count": "469"
+}
+```
 
 If a item is out of stock, the user will be presented with this message:
 
@@ -62,5 +72,34 @@ If a item is out of stock, the user will be presented with this message:
     "error":"Out of stock.",
     "message":"The item Ghost in the Machine (a.k.a. Deadly Terror) 
         is out of stock! Please check back soon."
+}
+```
+
+If an item is in stock, the following message will be shown:
+
+
+```json
+{
+    "message": "The film 'Alien Abduction' is available (469 in stock), but was not purchased. Use the flag &process=true to complete the transaction."
+}
+```
+
+The item can then be purchased by appending `&process=true`.
+
+Ex. `http://localhost:3000/purchase?name=Alien Abduction&process=true`
+
+```json
+{
+    "message": "The film 'Alien Abduction' was purchased. Inventory now at 468."
+}
+```
+
+Querying *Alien Abduction* shows that the `inventory_count` has been reduced by one.
+
+```json
+{
+    "title": "Alien Abduction",
+    "price": 37,
+    "inventory_count": "469"
 }
 ```
