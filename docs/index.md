@@ -8,9 +8,17 @@ The **RCF Shop API**  can be used to query items from a warehouse based on name 
 
 The API is currently live at [rcf-shopify-s19.herokuapp.com](https://rcf-shopify-s19.herokuapp.com/)
 
+<h3>Contents</h3>
+1. TOC
+{:toc}
+
 ### Product Queries
 
 `{{ page.herokulink }}/query` can be used to find single items.
+
+`{{ page.herokulink }}/all` will return the entire inventory.
+
+#### Query
 
 Parameter **name** can be filled with a partial item name. For instance, `name=Casa`, supplied as `{{ page.herokulink }}/query?name=Casa` will return `{"title":"Casanova","price":63,"inventory_count":"0"}`. Queries made without the `all` flag will return the first similar result.
 
@@ -47,7 +55,11 @@ The result will appear something like:
 ]
 ```
 
-### Purchase
+#### All
+
+`{{ page.herokulink }}/all` can be used with `&instock` or `&instock=false` to return all of the inventory results that are in the system, available, or out of stock.
+
+### Purchases
 
 To purchase a product, first query an item, then POST use the full name as the name parameter to `/purchase`.
 
