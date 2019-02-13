@@ -13,6 +13,9 @@ A RESTful NodeJS + PostgreSQL API. Attempting to go start to finish in a single 
 - Express <https://expressjs.com/>
 - PostgreSQL <https://www.postgresql.org/>
 
+**Follow-Up:** Considerations for future development:
+- Principled GraphQL <https://principledgraphql.com/>
+
 ## Development Notes
 
 - To develop: `npm run develop`
